@@ -44,3 +44,12 @@ async def update_todo(id: int, body: dict):
         todo["item"] = body["item"]
         return { "data": f"Todo with id: {id} has been updated"}
     return { "data": f"Todo with id: {id} not found" }
+
+@app.delete("/todos/{id}")
+async def delete_todo(id: int):
+    for todo in todos:
+        if int(todo["id"]) == id:
+           todos.remove(todo)
+           return {"data": f"Todo with id: {id} has been removed"}
+    return {"data": f"Todo with id: {id} not found"}
+      

@@ -103,14 +103,32 @@ const UpdateTodo = ({ item, id }) => {
   );
 };
 
+const DeleteTodo = ({ id }) => {
+  const { fetchTodos } = useContext(TodosContext);
+  const deleteTodo = async () => {
+    await fetch(`http://localhost:8000/todos/${id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: { id: id },
+    });
+    await fetchTodos();
+  };
+  return (
+    <Button h="1.5rem" size="sm" onClick={deleteTodo}>
+      Delete Todo
+    </Button>
+  );
+};
+
 const TodoHelper = ({ item, id, fetchTodos }) => {
   return (
     <Box p={1} shadow="sm">
-      <Flex justify="space-between">
+      <Flex justify="space-around">
         <Text mt={4} as="div">
           {item}
           <Flex align="end">
             <UpdateTodo item={item} id={id} fetchTodos={fetchTodos} />
+            <DeleteTodo id={id} fetchTodos={fetchTodos} />
           </Flex>
         </Text>
       </Flex>
