@@ -22,9 +22,9 @@ app.add_middleware(
 def read_root():
     return {"data": todos}
 
-def is_todo_present(new_todo_item):
+def is_todo_present(new_item):
    for todo in todos:
-    if todo["item"] == new_todo_item:
+    if todo["item"] == new_item:
         return True
 
 @app.post("/todos")
