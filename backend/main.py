@@ -23,9 +23,10 @@ def read_root():
     return {"data": todos}
 
 def is_todo_present(new_item):
-   for todo in todos:
-    if todo["item"] == new_item:
-        return True
+    for todo in todos:
+        if todo["item"] == new_item:
+           return True
+    return False
 
 @app.post("/todos")
 async def add_todo(todo: dict):
@@ -35,3 +36,11 @@ async def add_todo(todo: dict):
    return {
     "data": {"Todo added"}
     }
+
+@app.put("/todos/{id}")
+async def update_todo(id: int, body: dict):
+    for todo in todos:
+       if int(todo["id"]) == id:
+        todo["item"] = body["item"]
+        return { "data": f"Todo with id: {id} has been updated"}
+    return { "data": f"Todo with id: {id} not found" }
