@@ -1,6 +1,7 @@
 from typing import Union
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.api import todos
 
 app = FastAPI()
 
@@ -17,6 +18,6 @@ app.add_middleware(
     allow_headers=['*']
 )
 
-@app.get("/")
+@app.get("/todo", tags=["todos"])
 def read_root():
-    return "Hello World!"
+    return {"data": todos}
